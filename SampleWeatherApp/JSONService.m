@@ -22,19 +22,22 @@
         NSData* data = [NSData dataWithContentsOfURL:kWeatherURL options:NSDataReadingUncached error:&error];
         if (error) {
             NSLog(@"%@", [error localizedDescription]);
-            [self notifyDelegateOfError:error];
+            [self performSelectorOnMainThread:@selector(notifyDelegateOfError:) withObject:error waitUntilDone:YES];
+            
             
         } else {
             NSLog(@"Data has loaded successfully.");
+            [self performSelectorOnMainThread:@selector(processData:) withObject:data waitUntilDone:YES];
         }
         
-        [self performSelectorOnMainThread:@selector(processData:) withObject:data waitUntilDone:YES];
+
     });
 }
 - (void)cancel{
     //TODO KILL THE SERVICE (GRACEFULLY!!!!!) -- ALLOW VC'S TO CANCEL THE SERVICE & PREVENT SEGFAULTS
     
 }
+
 
 - (id)initWithDelegate:(id<WebServiceDelegate>)aDelegate
 {
