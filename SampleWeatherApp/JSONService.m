@@ -26,15 +26,17 @@
             
             
         } else {
-            NSLog(@"Data has loaded successfully.");
-            [self performSelectorOnMainThread:@selector(processData:) withObject:data waitUntilDone:YES];
+            if(!cancel){
+                NSLog(@"Data has loaded successfully.");
+                [self performSelectorOnMainThread:@selector(processData:) withObject:data waitUntilDone:YES];    
+            }
         }
         
 
     });
 }
 - (void)cancel{
-    //TODO KILL THE SERVICE (GRACEFULLY!!!!!) -- ALLOW VC'S TO CANCEL THE SERVICE & PREVENT SEGFAULTS
+    cancel = YES;
     
 }
 
@@ -44,6 +46,7 @@
     self = [super init];
     if (self) {
         [self setDelegate:aDelegate];
+        cancel = NO;
     }
     return self;
 }

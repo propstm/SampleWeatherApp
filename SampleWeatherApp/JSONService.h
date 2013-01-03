@@ -12,7 +12,7 @@
 
 @protocol WebServiceDelegate;
 @interface JSONService : NSObject<NSURLConnectionDelegate> {
-	
+	BOOL cancel;
 }
 
 @property (nonatomic, assign) id<WebServiceDelegate> delegate;
